@@ -1,0 +1,99 @@
+<app-content>
+  <section class="section">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="ibox ">
+
+          <style>
+            .blink {
+              animation: blinker 1s linear infinite;
+            }
+
+            @keyframes blinker {
+              50% {
+                opacity: 0;
+              }
+            }
+          </style>
+
+          <div class="ibox-content">
+            <div class="row">
+              <div class="col-lg-12">
+
+                <div class="card" *ngIf="isUserLoggedIn()">
+                  <div class="card-header" style="height: 56px !important;">
+                    <div class="card-header-action">
+                      <button type="button" class="btn btn-warning" (click)="loadCameraWiseStatus()" style="float: right;">
+                        <i class="fa fa-refresh"></i>
+                        Reload
+                      </button>
+                    </div>
+                    <h3 style="color:blue;">Live Video Streams</h3>
+                  </div>
+                </div>
+
+                <div class="row" *ngIf="isUserLoggedIn()">
+                  <div class="col-md-6 col-md-6 col-lg-6" *ngFor="let item of enabledLiveStreams;">
+                    <div [ngClass]="getCardStyleClass(item.cameraLiveStatus.status)">
+                      <div class="card-header">
+
+                        <div class="card-header-action" *ngIf="hasViewLiveStreamPermission">
+                          <button *ngIf="item.cameraLiveStatus.status == cameraComponentStatus.Running" type="button"
+                                  (click)="showModalDialog(item)" class="btn btn-icon btn-outline-success icon-left" style="float: right;">
+                            <i class="fa blink fa-circle"></i>
+                            View Live Stream
+                          </button>
+                        </div>
+                        <h4>{{item.cameraCode}}</h4>
+                      </div>
+                      <div class="card-body">
+                        <div class="row pb-2">
+                          <div class="col-4">
+                            <span>Camera</span>
+                          </div>
+                          <div class="col-6">
+                            <span [ngClass]="getStatusStyle(item.cameraLiveStatus.status)">{{item.cameraLiveStatus.status}}</span>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="card-footer text-danger bg-whitesmoke"
+                           *ngIf="item.cameraLiveStatus.status == cameraComponentStatus.Stopped && item.cameraLiveStatus.errorMessage">
+                        {{item.cameraLiveStatus.errorMessage}}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <p-dialog position="top" [responsive]="true" [style]="{width: '40vw', height: '30vw'}"
+                          [contentStyle]="{'overflow':'visible','max-height': '60vh','min-height':'330px'}"
+                          [(visible)]="liveStreamDataViewModel.enabled" (onHide)="onModalClose()" [modal]="true" [baseZIndex]="10000"
+                          [draggable]="true" [resizable]="true" [closeOnEscape]="true">
+                  <p-header>
+                    <div class="row justify-contentbetween">
+                      <div class="col-md-12" height="20px">
+                        {{liveStreamDataViewModel.header}}
+                        <span *ngIf="liveStreamDataViewModel.snapshot != null"
+                              class="blink text-success text-small font-600-bold"> <i class="fa fa-circle">Live</i></span>
+                      </div>
+
+                    </div>
+                  </p-header>
+                  <div *ngIf="liveStreamDataViewModel.snapshot == ''" class="col-14" align="center">
+                    <p-progressSpinner></p-progressSpinner>
+                  </div>
+                  <div *ngIf="liveStreamDataViewModel.snapshot != null" class="col-14" align="center">
+                    <img width="450" height="300" alt="{{liveStreamDataViewModel.snapshot}}Live Stream" id="{{liveStreamDataViewModel.cameraCode}}"
+                         src="{{liveStreamDataViewModel.snapshot}}" />
+                  </div>
+                  <div *ngIf="liveStreamDataViewModel.snapshot == null" class="col-12">
+                    <p *ngIf="liveStreamDataViewModel.snapshot == null" class="text-center text-danger">Couldn't get livestream Snapshot. Please try again after sometime.</p>
+                  </div>
+                </p-dialog>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</app-content>

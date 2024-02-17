@@ -1,0 +1,63 @@
+<nav class="navbar-default navbar-static-side" role="navigation">
+  <div class="sidebar-collapse">
+    <ul class="nav metismenu" id="side-menu">
+      <li class="nav-header">
+        <app-user-profile></app-user-profile>
+        <div class="logo-element">
+          L&T
+        </div>
+      </li>
+
+      <li class="sidebar-menu" routerLinkActive="active">
+        <a class="nav-link" [routerLink]="['/' , AppURL.SubCenterAreaLogsRead]">
+          <i class="fa fa-list"></i>
+          <span class="nav-label">SubCenter Area Logs</span>
+        </a>
+      </li>
+
+      <li routerLinkActive="active">
+        <a [routerLink]="['/' , AppURL.AlertsRead]" [hidden]="!authenticationService.hasPermission(ApplicationPermissions.AlertsRead)">
+          <i class="fa fa-pie-chart"></i> <span class="nav-label">Alerts</span>
+        </a>
+      </li>
+
+      <li routerLinkActive="active" [hidden]="!authenticationService.hasPermission(ApplicationPermissions.ReportRead)">
+        <a [routerLink]="['/' , AppURL.ReportRead]">
+          <i class="fa fa-table"></i>
+          <span>Reports</span>
+        </a>
+      </li>
+
+      <li class="sidebar-menu" routerLinkActive="active" [hidden]="!authenticationService.hasPermission(ApplicationPermissions.EnrolmentRead)">
+        <a class="nav-link" [routerLink]="['/' , AppURL.EnrolmentRead]">
+          <i class="fa fa-list"></i>
+          <span class="nav-label">Enrolments</span>
+        </a>
+      </li>
+
+      <li class="sidebar-menu" routerLinkActive="active" [hidden]="!authenticationService.hasPermission(ApplicationPermissions.ReadLiveStream)">
+        <a class="nav-link" [routerLink]="['/' , AppURL.LiveStream]">
+          <i class="fa fa-tv"></i>
+          <span class="nav-label">Live Stream</span>
+        </a>
+      </li>
+
+      <li class="sidebar-menu" routerLinkActive="active" [hidden]="!authenticationService.hasPermission(ApplicationPermissions.RoleRead)">
+        <a class="nav-link" [routerLink]="['/' , AppURL.RoleRead]">
+          <i class="fa fa-shield"></i>
+          <span class="nav-label">Roles</span>
+        </a>
+      </li>
+
+      <li class="sidebar-menu" routerLinkActive="active" [hidden]="!authenticationService.hasPermission(ApplicationPermissions.UserRead)">
+        <a class="nav-link" [routerLink]="['/' , AppURL.UserRead]">
+          <i class="fa fa-user"></i>
+          <span class="nav-label">Users</span>
+        </a>
+      </li>
+
+
+    </ul>
+
+  </div>
+</nav>

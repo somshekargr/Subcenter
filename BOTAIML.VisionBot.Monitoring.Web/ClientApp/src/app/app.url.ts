@@ -1,0 +1,23 @@
+export const AppURL = {
+  Default: '',
+  Login: 'login',
+  RoleRead: 'roles',
+  RoleAdd: 'add-role',
+  RoleEdit: 'edit-role/:id',
+  UserRead: 'users',
+  AddUser: 'add-user',
+  EditUser: 'user-edit/:id',
+  EnrolmentPageRead: 'enrolment-page',
+  EnrolmentRead: 'enrolments',
+  EnrolmentAdd: 'enrolment-add',
+  EnrolmentEdit: 'enrolment-edit/:id',
+  LiveStream: 'live-stream',
+  SubCenterAreaLogsRead: 'sub-center-area-logs',
+  AlertsRead: 'alerts',
+  ReportRead: 'report',
+  ViewReport: 'view-report/:id',
+  ReportPage: 'add-edit-report',
+  AddReport: 'report-add',
+  EditReport: 'report-edit/:id',
+
+};

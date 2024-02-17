@@ -1,0 +1,55 @@
+<app-content>
+  <section class="section" *ngIf="hasUserReadPermission">
+    <div class="section-body">
+      <div class="row">
+        <div class="col-12 col-md-12 col-lg-12">
+          <div class="ibox">
+            <div class="ibox-title" style="height: 56px !important; margin-top: 5px;">
+              <h3> Manage Users</h3>
+              <a class="btn btn-outline btn-primary dim pull-right" *ngIf="hasAddUserPermission"
+                 [routerLink]="['/', AppURL.AddUser]"><i class="fa fa-user-plus"></i> Add User</a>
+            </div>
+            <div class="ibox-content">
+              <p-table #dt [columns]="cols" [value]=" users " [lazy]="true"
+                       (onLazyLoad)="loadUsers($event)" [totalRecords]="totalRecords" [paginator]="true"
+                       [rowsPerPageOptions]="[10,15,20,25,50,100]" [rows]="10" [showLoader]="true" [sortOrder]="-1" sortField="id"
+                       [loading]="loading">
+                <ng-template pTemplate="caption">
+                  <div class="row">
+                    <div class="col-lg-8 text-left">
+                      <div class="input-group mb-2">
+                        <div class="input-group-prepend">
+                          <div class="input-group-text"><i class="fa fa-search"></i></div>
+                        </div>
+                        <input type="text" class="form-control" id="inlineFormInputGroup" placeholder="Search by Name. "
+                               (input)="dt.filterGlobal($event.target.value, 'contains')">
+                      </div>
+                    </div>
+                  </div>
+                </ng-template>
+                <ng-template pTemplate="header" let-columns>
+                  <tr>
+                    <th *ngFor="let col of columns" [pSortableColumn]="col.field">
+                      {{col.header}}
+                    </th>
+                    <th style="width: 60px;" *ngIf="hasEditUserPermission">&nbsp;</th>
+                  </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-rowData let-columns="columns">
+                  <tr>
+                    <td *ngFor="let col of columns">
+                      {{getNavigationPropertyData(rowData, col.field)}}
+                    </td>
+                    <td style="width: 50px;" *ngIf="hasEditUserPermission">
+                      <a class="btn btn-sm btn-outline btn-outline-info" [routerLink]="['/user-edit/', rowData.id]"><i class="fa fa-edit"></i></a>
+                    </td>
+                  </tr>
+                </ng-template>
+              </p-table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</app-content>

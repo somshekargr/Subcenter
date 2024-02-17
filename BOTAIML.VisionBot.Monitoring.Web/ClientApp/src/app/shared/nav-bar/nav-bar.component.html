@@ -1,0 +1,23 @@
+<div class="row border-bottom">
+    <nav class="navbar navbar-static-top" role="navigation" style="margin-bottom: 0">
+        <form class="form-inline mr-auto">
+            <div class="navbar-header">
+                <a (click)="toggleCollapse()" class="navbar-minimalize minimalize-styl-2 btn btn-primary " data-toggle="sidebar" href="javascript:void(0);"><i class="fa fa-bars"></i> </a>
+            </div>
+        </form>
+        <ul class="nav navbar-top-links navbar-right">
+            <!--<li>
+        <span class="m-r-sm text-muted welcome-message"><strong>Welcome to Sub-Center Logs,{{currentUser?.name}}</strong></span>
+      </li>-->
+            <li style="padding: 20px">
+                <span class="m-r-sm text-muted welcome-message">Welcome to Sub-Center,   {{currentUser?.name}}</span>
+            </li>
+            <li>
+                <a (click)="logout()">
+                    <i class="fa fa-sign-out"></i> Log out
+                </a>
+            </li>
+        </ul>
+
+    </nav>
+</div>

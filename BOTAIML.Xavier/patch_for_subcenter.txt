@@ -1,0 +1,9 @@
+packet share option is available for both device. Connect a ubuntu device with internet sharing configeration(uplink) to the same network switch.
+
+stop the process by restart and type below command
+to enable ui --> $ sudo systemctl start gdm3.service
+
+download the zip and extract the files to /mnt/Jetson_ext/Source_code/BOTAIML.Xavier/
+
+** this is just a backup patch. 
+(*.zip): https://drive.google.com/file/d/1G4s0CH_Ug_N8MANCL4LS4sI0P7-7F8GL/view?usp=sharing

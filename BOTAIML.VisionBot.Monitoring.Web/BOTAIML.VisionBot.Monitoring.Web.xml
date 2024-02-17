@@ -1,0 +1,62 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>BOTAIML.VisionBot.Monitoring.Web</name>
+    </assembly>
+    <members>
+        <member name="P:BOTAIML.VisionBot.Monitoring.Web.Authorization.PermissionViewModel.GroupName">
+            <summary>
+            GroupName, which groups permissions working in the same area
+            </summary>
+        </member>
+        <member name="P:BOTAIML.VisionBot.Monitoring.Web.Authorization.PermissionViewModel.ShortName">
+            <summary>
+            ShortName of the permission - often says what it does, e.g. Read
+            </summary>
+        </member>
+        <member name="P:BOTAIML.VisionBot.Monitoring.Web.Authorization.PermissionViewModel.Description">
+            <summary>
+            Long description of what action this permission allows 
+            </summary>
+        </member>
+        <member name="P:BOTAIML.VisionBot.Monitoring.Web.Authorization.PermissionViewModel.Permission">
+            <summary>
+            Gives the actual permission
+            </summary>
+        </member>
+        <member name="M:BOTAIML.VisionBot.Monitoring.Web.Authorization.PermissionViewModel.GetPermissionsForDisplay``1">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:BOTAIML.VisionBot.Monitoring.Web.Authorization.ReportPermissionViewModel.Id">
+            <summary>
+            ID of the Report
+            </summary>
+        </member>
+        <member name="P:BOTAIML.VisionBot.Monitoring.Web.Authorization.ReportPermissionViewModel.Name">
+            <summary>
+            Name of the Report
+            </summary>
+        </member>
+        <member name="P:BOTAIML.VisionBot.Monitoring.Web.Authorization.ReportPermissionViewModel.Description">
+            <summary>
+            Long description of this Report
+            </summary>
+        </member>
+        <member name="M:BOTAIML.VisionBot.Monitoring.Web.Utils.BackupUtil.GetFilePathInfo(System.String,BOTAIML.VisionBot.Monitoring.Web.ViewModels.BackupType)">
+            <summary>
+            Returns folder and filePath
+            </summary>
+            <param name="basePath"></param>
+            <param name="backupType"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BOTAIML.VisionBot.Monitoring.Web.ViewModels.Authorization.SelectListItem.#ctor">
+            <summary>
+            Class for the 
+            </summary>
+        </member>
+    </members>
+</doc>

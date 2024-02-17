@@ -1,0 +1,30 @@
+/* You can add global styles to this file, and also import other style files */
+
+/* Provide sufficient contrast against white background */
+
+.is-invalid {
+  border-color: orangered !important;
+}
+
+div.is-invalid {
+  border-top: none !important;
+  border-right: none !important;
+  border-left: none !important;
+  border-bottom: solid 1px !important;
+  border-color: orangered !important;
+}
+
+.ui-message.ui-message-error, .ui-message.ui-message-error > .ui-message-icon {
+  background-color: transparent !important;
+  color: orangered !important;
+}
+
+.invalid-input {
+  display: block;
+  width: 100%;
+  margin-top: .25rem;
+  font-size: 80%;
+  color: #dc3545
+}
+
+

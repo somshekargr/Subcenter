@@ -1,0 +1,14 @@
+fastapi
+uvloop
+uvicorn
+python-multipart
+imageio
+opencv-python
+numpy
+Pillow
+tensorflow
+scipy
+scikit-learn==0.22.2.post1
+#milvus
+#pymilvus
+pickle

@@ -1,0 +1,130 @@
+<app-content>
+  <section class="section">
+    <div class="section-body">
+      <div class="row">
+        <div class="col-12 col-md-12 col-lg-12">
+          <div class="ibox">
+            <div class="ibox-title" style="margin-top: 5px;">
+              <h4>Alerts</h4>
+            </div>
+            <div class="ibox-content">
+              <form #alertLogForm="ngForm" (ngSubmit)="onSubmit(alertLogForm)">
+                <div class="card-body">
+                  <div class="col-lg-12">
+                    <div class="row">
+                      <div class="col-lg-4 row">
+                        <label for="selectedArea" class="col-4" style="font-size: medium; padding-top: 5px;">
+                          AreaName
+                        </label>
+                        <div class="col-8">
+                          <p-dropdown [options]="areaNames" [(ngModel)]="selectedArea" name="area"
+                                      placeholder="Select a Area" optionLabel="name" [showClear]="true"
+                                      (onChange)="onFilterChange($event)"
+                                      #area="ngModel"
+                                      [ngClass]="{ 'is-invalid': area.invalid && (area.touched || area.dirty) }"
+                                      [panelStyle]="{minWidth:'12em'}" [style]="{'width': '95%'}">
+                          </p-dropdown>
+
+                        </div>
+                      </div>
+                      <div class="col-lg-3 row">
+                        <label for="selectedDate" class="col-4" style="font-size: medium; padding-top: 5px;">Date</label>
+                        <div class="col-8">
+                          <p-calendar name="date" [(ngModel)]="selectedDate" #date="ngModel"
+                                      (onSelect)="onFilterChange($event)" [showIcon]="true"
+                                      placeholder="Select a date" [monthNavigator]="true" [yearNavigator]="true"
+                                      [yearRange]="dateYearRange" [minDate]="minDate" [maxDate]="maxDate"
+                                      [inputStyle]="{'width':'150px'}">
+
+                          </p-calendar>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </form>
+              <div class="card author-box card-success">
+                <div class="card-body p-0">
+                  <p-table #dt [columns]="cols" [value]="logs" [lazy]="true" (onLazyLoad)="loadAlerts($event)"
+                           [totalRecords]="totalRecords" [paginator]="true" [rowsPerPageOptions]="[10,15,20,25,50,100]" [rows]="10"
+                           [loading]="loading" [showLoader]="true" sortField="dateTimeStamp" [sortOrder]="-1"
+                           [areas]="area.value" [date]="date.value">
+                    <ng-template pTemplate="caption">
+                      <div class="row">
+                        <div class="col-lg-10 text-left">
+                          <div class="input-group mb-2">
+                            <div class="input-group-prepend">
+                              <div class="input-group-text"><i class="fa fa-search"></i></div>
+                            </div>
+                            <input type="text" class="form-control" id="inlineFormInputGroup" placeholder="Search by Event | Content Type"
+                                   (input)="dt.filterGlobal($event.target.value, 'contains')">
+                          </div>
+                        </div>
+                      </div>
+                    </ng-template>
+                    <ng-template pTemplate="header" let-columns>
+                      <tr>
+                        <th *ngFor="let col of columns" [pSortableColumn]="col.field">
+                          {{col.header}}
+                        </th>
+                      </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-rowData let-columns="columns">
+                      <tr>
+                        <td>
+                          {{getNavigationPropertyData(rowData, 'logType')}}
+                        </td>
+                        <td>
+                          {{getNavigationPropertyData(rowData, 'contentType')}}
+                        </td>
+                        <td>
+                          {{getNavigationPropertyData(rowData, 'type')}}
+                        </td>
+                        <td>
+                          {{getNavigationPropertyData(rowData, 'event')}}
+                        </td>
+                        <td>
+                          {{getNavigationPropertyData(rowData, 'level')}}
+                        </td>
+                        <td>
+                          <span pTooltip="{{getNavigationPropertyData(rowData, 'dateTimeStamp') | date:'dd.MM.yyyy HH:mm:ss'}}">{{getNavigationPropertyData(rowData, 'dateTimeStamp') | timeAgo}}</span>
+                        </td>
+                        <td *ngIf="getNavigationPropertyData(rowData, 'mediaFilePath') != null">
+                          <span *ngIf="getNavigationPropertyData(rowData, 'contentType') == 'Text'"
+                                style="border-radius: 0%; width: 70px; height: 70px;">
+                            {{getNavigationPropertyData(rowData, 'message')}}
+                          </span>
+                          <div *ngIf="getNavigationPropertyData(rowData, 'contentType') == 'Image'">
+                            <img style="border-radius: 0%; width: 70px; height: 70px;" alt="NoImage"
+                                 (click)="showDialog($event)"
+                                 src="data:image/jpeg;base64,{{getNavigationPropertyData(rowData, 'image')}}"
+                                 class="img-fluid;" *ngIf="getNavigationPropertyData(rowData, 'contentType') == 'Image'">
+                          </div>
+                          <!--<video *ngIf="getNavigationPropertyData(rowData, 'contentType') == 'Video'"
+                                 style="border-radius: 0%; width: 70px; height: 70px;" controls="controls"
+                                 class="img-fluid;">
+                            <source src="data:video/mp4;base64,{{getNavigationPropertyData(rowData, 'image')}}"
+                                    type="video/mp4" />
+                          </video>-->
+                        </td>
+                        <td *ngIf="getNavigationPropertyData(rowData, 'mediaFilePath') === null">
+                          {{'No image'}}
+                        </td>
+                      </tr>
+                    </ng-template>
+                  </p-table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <p-dialog header="Image" [(visible)]="displayModal" [modal]="true" [style]="{width: '40vw', height: '30vw'}"
+              [contentStyle]="{'overflow':'visible','max-height': '60vh','min-height':'330px'}" [draggable]="false" [resizable]="false" appendTo="body">
+      <img style="border-radius: 0%; cursor: pointer; width: 500px; height: 300px;" alt="NoImage"
+           [src]="modelImage"
+           class="img-fluid;">
+    </p-dialog>
+  </section>
+</app-content>

@@ -1,0 +1,28 @@
+{
+    "door_ecu_ip" : "10.20.20.200",
+    "power_ecu_ip" : "10.20.20.201",
+    "api": {
+        "door_open": "/?door=open",
+        "buzzer_on": "/?buzzer=on",
+        "hooter_on": "/?hooter=on",
+        "set_output_minimum":["",""],
+        "set_load_minimum":["",""],
+        "door_status_api": "door_status: (.*)</p>",
+        "fire_hazzard_api": "fire_smoke_status: (.*)</p>",
+        "power_source_api": "power_source: (.*)</p>",
+        "load_status_api": "load_status: (.*)</p>",
+        "get_main_grid":  "<p>\n grid: (.*)</p>",
+        "get_genset_1": "<p>\n dg_1: (.*)</p>",
+        "get_genset_2": "<p>\n dg_2: (.*)</p>",
+        "get_load": "<p>\n load: (.*)</p>",
+        "lowest_power_limit": 2000,
+        "lowest_load_limit": 2000,
+        "load_spike_limit": 5
+    },
+    "web_api":
+    {
+        "ip": "localhost",
+        "api": "http://localhost:8800/SubCenterAreaLogs/SubCenterAreaLogDetection",
+        "prt": "8800"
+    }
+}

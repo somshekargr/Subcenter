@@ -1,0 +1,78 @@
+<app-content>
+  <section class="section" *ngIf="hasEnrolmentReadPermission">
+    <div class="section-body">
+      <div class="row">
+        <div class="col-12 col-md-12 col-lg-12">
+          <div class="ibox">
+            <div class="ibox-title" style="height: 56px !important; margin-top: 5px;">
+              <h3>Enrolments</h3>
+              <a class="btn btn-outline btn-primary dim pull-right" *ngIf="hasEnrolmentAddPermission"
+                 [routerLink]="['/', AppURL.EnrolmentAdd]"><i class="fa fa-user-plus"></i> Add New Enrolment</a>
+            </div>
+            <div class="ibox-content">
+              <p-table #dt [columns]="cols" [value]=" enrolments " [lazy]="true"
+                       (onLazyLoad)="loadEnrolment($event)" [totalRecords]="totalRecords" [paginator]="true"
+                       [rowsPerPageOptions]="[10,15,20,25,50,100]" [rows]="10" [showLoader]="true"
+                       sortField="id" [loading]="loading" [sortOrder]="-1">
+                <ng-template pTemplate="caption">
+                  <div class="row">
+                    <div class="col-lg-8 text-left">
+                      <div class="input-group mb-2">
+                        <div class="input-group-prepend">
+                          <div class="input-group-text"><i class="fa fa-search"></i></div>
+                        </div>
+                        <input type="text" class="form-control" id="inlineFormInputGroup" placeholder="Search by Name | EmplyeeId | Role Name. "
+                               (input)="dt.filterGlobal($event.target.value, 'contains')">
+                      </div>
+                    </div>
+                  </div>
+                </ng-template>
+                <ng-template pTemplate="header" let-columns>
+                  <tr>
+                    <th *ngFor="let col of columns" [pSortableColumn]="col.field">
+                      {{col.header}}
+                    </th>
+                    <th style="width: 140px;" *ngIf="hasEnrolmentEditPermission"></th>
+                  </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-rowData let-columns="columns">
+                  <tr>
+                    <td>
+                      {{getNavigationPropertyData(rowData, 'name')}}
+                    </td>
+                    <td>
+                      {{getNavigationPropertyData(rowData, 'employeeId')}}
+                    </td>
+                    <td>
+                      {{getNavigationPropertyData(rowData, 'roleName')}}
+                    </td>
+                    <td>
+                      {{getNavigationPropertyData(rowData, 'dateOfBirth') | date: 'dd.MM.yyyy'}}
+                    </td>
+                    <td>
+                      {{getNavigationPropertyData(rowData, 'permitTimeMinute')}}
+                    </td>
+                    <td>
+                      {{getNavigationPropertyData(rowData, 'mobileNumber')}}
+                    </td>
+                    <td *ngIf="hasEnrolmentEditPermission">
+                      <button type="button" class="btn btn-w-m btn-outline btn-info" [routerLink]="['/enrolment-edit/', rowData.id]"><i class="fa fa-edit"></i> Edit </button>
+
+                    </td>
+                    <td *ngIf="hasEnrolmentDeletePermission">
+                      <button class="btn btn-w-m btn-outline btn-danger"
+                              (click)="confirmDeleteEnrolment(rowData.id)">
+                        <i class="fa fa-trash"></i> Delete
+                      </button>
+                    </td>
+                  </tr>
+                </ng-template>
+              </p-table>
+              <p-confirmDialog [style]="{width: '50vw'}" appendTo="body"></p-confirmDialog>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</app-content>

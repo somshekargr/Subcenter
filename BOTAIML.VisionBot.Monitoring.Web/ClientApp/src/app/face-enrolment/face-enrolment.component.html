@@ -1,0 +1,48 @@
+<h5 class="text-center text-warning" *ngIf="faceImages.length < 1">Face not enrolled!</h5>
+<div *ngIf="faceImages.length > 0" class="card-body pb-0">
+  <div *ngIf="faceImages.length > 0" class="row">
+    <div *ngFor="let img of faceImages; let i = index;" class="col-6 col-sm-3 col-lg-3 mb-4 mb-md-0">
+      <div class="avatar-item">
+        <img style="border-radius: 0%; width: 50px; height: 50px; margin:5px;" alt="Enroled Image" src="data:image/jpeg;base64,{{img.image}}" class="img-fluid;">
+        <div class="fa fa-trash" (click)="confirmDeleteFaceImage(img);" *ngIf="canDeleteImage(img) && enableDelete;" style="cursor: pointer; position: absolute; top:43px; right:3px" title="Delete">
+          <i class="fa fa-trash-alt"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<p-dialog header="Enroll" [(visible)]="displayModal" [modal]="true" [draggable]="false" [resizable]="false" [closable]="false" appendTo="body">
+  <div style="position: relative" class="margin">
+    <video #inputVideo autoplay muted playsinline style="width: 640px; height: 360px;"></video>
+    <canvas #overlay id="overlay" style="position: absolute; top: 0; left: 0; width: 640px; height: 360px;"></canvas>
+    <p-progressBar [value]="progress" *ngIf="showProgress"></p-progressBar>
+  </div>
+</p-dialog>
+
+<p-dialog appendTo="body" [visible]="isFaceCaptured && isSaveCompleted" [modal]="true" [draggable]="false"
+          [resizable]="false" [style]="{ 'max-width': '50vw' }">
+
+  <div *ngIf="(faceEnrolmentResult != null)" class="p-1">
+
+    <!-- Enrolment Failed -->
+    <div *ngIf="!faceEnrolmentResult.success">
+      <h6 class="text-danger">Face vectors could not be generated due to the following error:</h6>
+      <br>
+      <pre class="text-danger">{{faceEnrolmentResult.error}}</pre>
+    </div>
+
+    <!-- Enrolment Succeeded -->
+    <div *ngIf="faceEnrolmentResult.success && !has_face_photo_errors">
+      <h6 class="text-success">Face enrolment completed successfully.</h6>
+    </div>
+
+
+  </div>
+
+  <p-footer>
+    <button type="button" pButton icon="pi pi-check" (click)="acceptSaveResult.emit()" label="OK"></button>
+  </p-footer>
+</p-dialog>
+
+<p-toast position="top-center"></p-toast>

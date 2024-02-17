@@ -1,0 +1,59 @@
+.delete-image-wrapper {
+  position: relative;
+  float: right;
+}
+
+a.remImage img {
+  box-shadow: none;
+  position: absolute;
+  right: 0px;
+  top: -4px;
+  opacity: 0;
+  display: block;
+  margin-right: 4px;
+  margin-bottom: 2px;
+  margin-top: -10px;
+  /* transition: all .5s ease-in-out;*/
+}
+
+.delete-image-wrapper:hover a.remImage img {
+  opacity: 1;
+  z-index: 99;
+  position: absolute;
+  top: 5px;
+}
+
+.delete-image-wrapper:after {
+  content: '';
+  width: 70%;
+  height: 100%;
+  position: absolute;
+  display: block;
+  /*background: rgba(0, 0, 0, 0.6);*/
+  top: 0px;
+  z-index: 0;
+  opacity: 0;
+  /* transition: all .5s ease-in-out;*/
+}
+
+.delete-image-wrapper:hover:after {
+  opacity: 1;
+}
+
+.fa-trash-alt:hover {
+  color: red;
+  -ms-transform: scale(1.5);
+  -webkit-transform: scale(1.5);
+  transform: scale(1.5);
+}
+
+.fa-trash {
+  transition: transform .3s;
+}
+
+  .fa-trash:hover {
+    color: red;
+    -ms-transform: scale(1.5);
+    -webkit-transform: scale(1.5);
+    transform: scale(1.5);
+  }

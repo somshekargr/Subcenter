@@ -1,0 +1,89 @@
+<app-content>
+  <section class="section">
+    <div *ngIf="!isEditable" class="alert alert-danger alert-dismissible show fade">
+      <div class="alert-body">
+        <button class="close" data-dismiss="alert">
+          <span>×</span>
+        </button>
+        You cannot make changes to Super User role.
+      </div>
+    </div>
+    <div class="ibox">
+      <div class="ibox-title" style="margin-top: 20px;">
+        <h4 *ngIf="isNewRole">Add New Role</h4>
+        <h4 *ngIf="!isNewRole">Edit Role</h4>
+      </div>
+      <form #enrolmentForm="ngForm" (ngSubmit)="onSubmit()">
+        <div class="card card-info">
+          <div class="ibox-content">
+            <div class="row">
+              <div class="col-6">
+                <div class="form-group">
+                  <label class="control-label">Role Name</label>
+                  <input name="roleName" text="text" #nameRef="ngModel" required class="form-control" [(ngModel)]="role.name" placeholder="Enter Role Name" pattern="([^\s][A-z-À-ž\s]+)"
+                         (ngModelChange)="onNameChanged()" />
+                  <div *ngIf="nameRef.errors && (nameRef.dirty || nameRef.touched)" class="alert alert-danger">Name is required</div>
+                  <div *ngIf="uniqueNameFailed" class="alert alert-danger">Another role by this name already exists!</div>
+                </div>
+              </div>
+              <div class="col-6">
+                <div class="form-group">
+                  <label class="control-label">Users in this Role</label>
+                  <div class="form-control-static">
+                    {{role.users}}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="ibox-title" style="margin-top: 30px;">
+          <h4>Permissions</h4>
+        </div>
+        <div class="ibox-content">
+          <div *ngIf="isPermissionsInvalid" class="alert alert-danger">
+            Role needs to be assigned atleast one permission
+          </div>
+          <div class="row">
+            <div class="col-3" *ngFor="let group of permissionGroups">
+              <h6>{{group}}</h6>
+              <ul class="list-group">
+                <li class="list-group-item" *ngFor="let permissionVM of appPermissions[group]">
+                  <label style="display:block;">
+                    <p-checkbox name="permissions" [value]="permissionVM.permission" [(ngModel)]="role.permissions"
+                                (ngModelChange)="onPermissionsChanged()" [disabled]="!isEditable"></p-checkbox>
+                    {{permissionVM.shortName}}
+                    <br />
+                    <small class="text-muted">{{permissionVM.description}}</small>
+                  </label>
+                </li>
+              </ul>
+            </div>
+
+            <div class="col-3">
+              <ul class="list-group">
+                <li class="list-group-item" *ngFor="let reportPermissionVM of reports">
+                  <label style="display:block;">
+                    <p-checkbox name="reportPermissions" [value]="reportPermissionVM.id" [(ngModel)]="role.reportPermissions"
+                                (ngModelChange)="onPermissionsChanged()" [disabled]="!isEditable"></p-checkbox>
+                    {{reportPermissionVM.name}}
+                    <br />
+                    <small class="text-muted">{{reportPermissionVM.description}}</small>
+                  </label>
+                </li>
+              </ul>
+            </div>
+
+          </div>
+          <div class="row">
+            <div class="col-12 text-right">
+              <input type="submit" value="Save" class="btn btn-primary" [disabled]="enrolmentForm.form.invalid" *ngIf="isEditable" />
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+
+  </section>
+</app-content>
